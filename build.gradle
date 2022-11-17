@@ -5,14 +5,16 @@ plugins {
 }
 
 group = 'com.game.tictactoe'
-sourceCompatibility=1.8
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-web',
+            'org.springdoc:springdoc-openapi-ui:1.6.12'
+    )
     testImplementation('org.springframework.boot:spring-boot-starter-test',
             'org.junit.vintage:junit-vintage-engine'
     )

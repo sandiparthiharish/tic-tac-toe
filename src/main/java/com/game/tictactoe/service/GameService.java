@@ -19,8 +19,17 @@ public class GameService {
         this.gameBoard = gameBoard;
     }
 
+    public String resetGameState() {
+
+        resetGame();
+        return "Reset successful";
+    }
+
     public String playGame(Player player, int position) {
 
+        if (isFirstTurn()) {
+            gameBoard.initialize();
+        }
         validateCurrentTurn(player, position);
         saveCurrentTurn(player, position);
         return validateGameAndSendResponse(player);
@@ -29,11 +38,18 @@ public class GameService {
     private String validateGameAndSendResponse(Player player) {
 
         if (gameBoard.isBoardFull()) {
+            resetGame();
             return "Game is a Tie";
         } else if (isGameOver()) {
+            resetGame();
             return String.format("Player %s won the game", player.getValue());
         }
         return "Successful Move";
+    }
+
+    private void resetGame() {
+        previousPlayer = INITIAL_VALUE;
+        gameBoard.initialize();
     }
 
     private boolean isGameOver() {

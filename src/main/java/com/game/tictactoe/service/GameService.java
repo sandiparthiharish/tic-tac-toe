@@ -24,7 +24,12 @@ public class GameService {
             message = "Player X should move first";
             throw new InvalidTurnException(message);
         }
-        gameBoard.setPositionOfPlayerOnBoard(player, Position.getRowColumnValueOfPosition(position));
+        if (player.getValue() == previousPlayer) {
+            message = String.format("Player %s's turn now", player.getValue());
+        } else {
+            previousPlayer = player.getValue();
+            gameBoard.setPositionOfPlayerOnBoard(player, Position.getRowColumnValueOfPosition(position));
+        }
         return message;
     }
 

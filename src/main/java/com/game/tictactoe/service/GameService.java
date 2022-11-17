@@ -32,6 +32,8 @@ public class GameService {
     private String validateGameAndSendResponse(Player player) {
 
         if (gameBoard.isBoardFull()) {
+            previousPlayer = INITIAL_VALUE;
+            gameBoard.initialize();
             return "Game is a Tie";
         } else if (isGameOver()) {
             previousPlayer = INITIAL_VALUE;

@@ -22,9 +22,14 @@ public class GameService {
 
         String message = "Successful Move";
         validateCurrentTurn(player, position);
+        saveCurrentTurn(player, position);
+        return message;
+    }
+
+    private void saveCurrentTurn(Player player, int position) {
+
         previousPlayer = player.getValue();
         gameBoard.setPositionOfPlayerOnBoard(player, Position.getRowColumnValueOfPosition(position));
-        return message;
     }
 
     private void validateCurrentTurn(Player player, int position) {

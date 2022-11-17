@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
@@ -30,6 +31,15 @@ public class GameControllerTests {
         when(gameService.playGame(Player.X, 1)).thenReturn("Successful Move");
 
         mvc.perform(post("/tic-tac-toe/play/{player}/{position}", Player.X, 1))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void resetGameHandler_APIFound() throws Exception {
+
+        when(gameService.resetGameState()).thenReturn("Reset successful");
+
+        mvc.perform(put("/tic-tac-toe/reset-game"))
                 .andExpect(status().isOk());
     }
 }

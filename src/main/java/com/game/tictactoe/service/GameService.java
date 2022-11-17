@@ -31,14 +31,14 @@ public class GameService {
 
         if (isFirstTurn() && isPlayerO(player)) {
             throw new InvalidTurnException("Player X should move first");
-        } else if (isAlternatePlayerPlaying(player)) {
+        } else if (isNotAlternatePlayerPlaying(player)) {
             throw new InvalidTurnException(String.format("Player %s's turn now", player.getValue()));
         } else if (gameBoard.getPositionValueOnBoard(Position.getRowColumnValueOfPosition(position)) != 0) {
             throw new PositionAlreadyOccupiedException(String.format("Input position %s is already occupied", position));
         }
     }
 
-    private boolean isAlternatePlayerPlaying(Player player) {
+    private boolean isNotAlternatePlayerPlaying(Player player) {
         return player.getValue() == previousPlayer;
     }
 

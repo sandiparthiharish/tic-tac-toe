@@ -20,7 +20,7 @@ public class GameService {
     public String playGame(Player player, int position) {
 
         String message = "Successful Move";
-        if (isFirstTurn() && isFirstPlayerO(player)) {
+        if (isFirstTurn() && isPlayerO(player)) {
             message = "Player X should move first";
             throw new InvalidTurnException(message);
         }
@@ -32,7 +32,7 @@ public class GameService {
         return previousPlayer == INITIAL_PLAYER_VALUE;
     }
 
-    private boolean isFirstPlayerO(Player player) {
+    private boolean isPlayerO(Player player) {
         return player == Player.O;
     }
 }

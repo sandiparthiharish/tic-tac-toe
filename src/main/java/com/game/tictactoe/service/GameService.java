@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GameService {
 
-    private static final int INITIAL_PLAYER_VALUE = 0;
+    private static final int INITIAL_VALUE = 0;
     private final GameBoard gameBoard;
     private char previousPlayer;
 
@@ -39,7 +39,7 @@ public class GameService {
     }
 
     private boolean isPositionOccupied(int position) {
-        return gameBoard.getPositionValueOnBoard(Position.getRowColumnValueOfPosition(position)) != 0;
+        return gameBoard.getPositionValueOnBoard(Position.getRowColumnValueOfPosition(position)) != INITIAL_VALUE;
     }
 
     private boolean isNotAlternatePlayerPlaying(Player player) {
@@ -47,7 +47,7 @@ public class GameService {
     }
 
     private boolean isFirstTurn() {
-        return previousPlayer == INITIAL_PLAYER_VALUE;
+        return previousPlayer == INITIAL_VALUE;
     }
 
     private boolean isPlayerO(Player player) {

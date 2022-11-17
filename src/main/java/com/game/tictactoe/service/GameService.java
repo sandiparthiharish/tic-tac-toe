@@ -2,6 +2,7 @@ package com.game.tictactoe.service;
 
 import com.game.tictactoe.domain.Player;
 import com.game.tictactoe.domain.Position;
+import com.game.tictactoe.exception.InvalidPositionException;
 import com.game.tictactoe.exception.InvalidTurnException;
 import com.game.tictactoe.exception.PositionAlreadyOccupiedException;
 import com.game.tictactoe.util.GameBoard;
@@ -20,10 +21,24 @@ public class GameService {
 
     public String playGame(Player player, int position) {
 
-        String message = "Successful Move";
         validateCurrentTurn(player, position);
         saveCurrentTurn(player, position);
-        return message;
+        return validateGameAndSendResponse(player);
+    }
+
+    private String validateGameAndSendResponse(Player player) {
+
+        if (gameBoard.isBoardFull()) {
+            return "Game is a Tie";
+        } else if (isGameOver()) {
+            return String.format("Player %s won the game", player.getValue());
+        }
+        return "Successful Move";
+    }
+
+    private boolean isGameOver() {
+        return gameBoard.isAnyRowOccupiedBySamePlayer() || gameBoard.isAnyColumnOccupiedBySamePlayer()
+                || gameBoard.isAnyDiagonalOccupiedBySamePlayer();
     }
 
     private void saveCurrentTurn(Player player, int position) {
@@ -34,13 +49,19 @@ public class GameService {
 
     private void validateCurrentTurn(Player player, int position) {
 
-        if (isFirstTurn() && isPlayerO(player)) {
+        if (Position.getRowColumnValueOfPosition(position) == Position.DEFAULT) {
+            throw new InvalidPositionException(String.format("Input %s position is invalid", position));
+        } else if (isFirstTurn() && isPlayerO(player)) {
             throw new InvalidTurnException("Player X should move first");
         } else if (isNotAlternatePlayerPlaying(player)) {
-            throw new InvalidTurnException(String.format("Player %s's turn now", player.getValue()));
+            throw new InvalidTurnException(String.format("Player %s's turn now", getNextPlayer(player)));
         } else if (isPositionOccupied(position)) {
             throw new PositionAlreadyOccupiedException(String.format("Input position %s is already occupied", position));
         }
+    }
+
+    private Character getNextPlayer(Player player) {
+        return player == Player.X ? Player.O.getValue() : Player.X.getValue();
     }
 
     private boolean isPositionOccupied(int position) {

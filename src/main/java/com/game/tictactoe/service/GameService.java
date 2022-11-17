@@ -26,6 +26,9 @@ public class GameService {
         if (isGameOver()) {
             return String.format("Player %s won the game", player.getValue());
         }
+        if (gameBoard.isBoardFull()) {
+            return "Game is a Tie";
+        }
         return message;
     }
 

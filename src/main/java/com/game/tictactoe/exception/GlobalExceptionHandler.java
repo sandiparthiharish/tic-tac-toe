@@ -9,7 +9,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {InvalidTurnException.class, PositionAlreadyOccupiedException.class})
+    @ExceptionHandler(value = {InvalidTurnException.class, InvalidPositionException.class,
+            PositionAlreadyOccupiedException.class})
     public ResponseEntity<String> handleException(RuntimeException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
